@@ -1,0 +1,37 @@
+{
+  "site": "https://jmwilhite3.github.io/skills",
+  "handle": "jimmy.tensor",
+  "skills": [
+    {
+      "keyword": "BOARD",
+      "line": "Turns a business's customer reviews into the IF YOU / YOU NEED whiteboard ad.",
+      "steps": [
+        "Reads the reviews and finds the six most common reasons people bought, each backed by reviews quoted word for word",
+        "Writes the full 60-second ad",
+        "Draws the hand-drawn board on Higgsfield and animates it with Wan 3.0",
+        "Voices and captions it into a ready 9:16 clip"
+      ],
+      "needs": [
+        "Higgsfield connected to Claude: about 50 credits a board, quoted before anything is spent",
+        "Your reviews, 200 or more if you have them (a file, a paste or a link)",
+        "For the final cut: Claude Code on a Mac with ffmpeg and uv. claude.ai does everything up to the board video"
+      ],
+      "first": "Make a board for [business]",
+      "source": "~/Dev/agent_skool/dist/a7-board",
+      "example": "~/Dev/agent_skool/dist/a7-board/skills/a7-board/examples/metal-roofer/board.jpg",
+      "exampleOf": "a metal-roof company",
+      "status": "draft",
+      "tested": null,
+      "dm": {
+        "replies": [
+          "sent 📩 check your DMs",
+          "just sent it. check your requests if it's not there",
+          "it's in your DMs, go build"
+        ],
+        "offer": {"text": "yo, BOARD's ready. tap and I'll drop it", "button": "send it"},
+        "follow": {"text": "one thing: it's for followers. hit follow then tap again", "button": "done, followed"},
+        "send": {"text": "here you go. reviews in, whiteboard ad out", "button": "get BOARD"}
+      }
+    }
+  ]
+}

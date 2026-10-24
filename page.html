@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$keyword · a free Claude skill</title>
+<meta name="description" content="$line">
+<meta property="og:title" content="$keyword · a free Claude skill">
+<meta property="og:description" content="$line">
+<meta property="og:url" content="$url">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0a0a0a; --ink: #fff; --muted: #a3a3a3; --line: #262626; --green: #09814a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 Inter, system-ui, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 28px 20px 56px; }
+  a { color: var(--ink); }
+  .top { color: var(--muted); font-size: 14px; }
+  .top a { color: var(--muted); text-decoration: none; }
+  h1 { font-size: 64px; line-height: 1; font-weight: 600; letter-spacing: -0.05em; margin: 28px 0 12px; }
+  .line { font-size: 20px; margin: 0 0 24px; }
+  figure { margin: 0 0 24px; }
+  .example { display: block; width: 100%; border-radius: 12px; }
+  figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  .get { display: block; text-align: center; background: var(--green); color: #fff; text-decoration: none;
+         font-weight: 600; font-size: 18px; padding: 16px; border-radius: 12px; }
+  .phone { color: var(--muted); font-size: 15px; margin: 12px 0 0; }
+  .phone a { color: var(--ink); }
+  h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin: 40px 0 12px; }
+  h3 { font-size: 17px; font-weight: 600; margin: 20px 0 6px; }
+  ol, ul { padding-left: 22px; margin: 0; }
+  li { margin: 6px 0; }
+  code, pre { font-family: ui-monospace, Menlo, monospace; font-size: 15px; }
+  code { background: #171717; padding: 1px 6px; border-radius: 6px; }
+  pre { background: #171717; padding: 14px 16px; border-radius: 12px; white-space: pre-wrap; margin: 0; }
+  footer { color: var(--muted); font-size: 14px; margin-top: 48px; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top"><a href="../">@$handle</a> · free Claude skill</div>
+  <h1>$keyword</h1>
+  <p class="line">$line</p>
+  $example
+  <a class="get" href="$keyword.zip" download>Download $keyword</a>
+  <p class="phone">On your phone? <a href="$mail">Email it to yourself</a> and install it on your computer.</p>
+
+  <h2>What it does</h2>
+  <ol>$steps</ol>
+  $needs
+
+  <h2>Install it</h2>
+  <p>Unzip the download first. Its README says the rest too.</p>
+  <h3>Claude (web or desktop)</h3>
+  <ol>
+    <li>In Settings → Capabilities, turn on <b>Code execution and file creation</b>.</li>
+    <li>Go to Customize → Skills, click <b>+</b>, then <b>Create skill</b> → <b>Upload a skill</b>, and pick <code>$name.zip</code> from inside the folder.</li>
+  </ol>
+  <h3>Claude Code</h3>
+  <ol>
+    <li>Copy the skill into your skills folder: <code>cp -R $name/skills/$name ~/.claude/skills/</code></li>
+    <li>Start a new Claude Code session.</li>
+  </ol>
+
+  <h2>Then type</h2>
+  <pre>$first</pre>
+
+  <footer>Free from <a href="https://www.instagram.com/$handle/">@$handle</a>.</footer>
+</main>
+</body>
+</html>
