@@ -20,11 +20,13 @@ A skill in skills.json:
   example  a picture of what it made, or null
   exampleOf  who it made it for, as the page's caption says it ("a metal-roof company"), or null with no example
   status   "draft" (its page is built, but the index doesn't list it) or "live"
-  tested   the day a test comment got its DM, or null
   dm       ManyChat's words for it: replies (rotating public replies under the comment), offer (the first DM and its
            button), follow (the ask for anyone not following yet and its button), send (the link and its button)
 
-check passes when the skill is live and tested, and its page and download both answer from the site.
+check passes when the skill is live, its page and download both answer from the site, and ManyChat has an automation
+named after the keyword whose link button has been clicked at least once: its bot field <keyword>_clicked, which the
+button adds 1 to. A test comment from a second account is that first click. ManyChat's API doesn't say whether an
+automation is live, so the click is the proof. The key is MANYCHAT_API_KEY in ~/Dev/style-lab/.env.local, never printed.
 """
 import html
 import json
@@ -40,9 +42,10 @@ from string import Template
 
 ROOT = Path(__file__).resolve().parent
 DOCS = ROOT / "docs"
-FIELDS = ("keyword", "line", "steps", "needs", "first", "source", "example", "exampleOf", "status", "tested", "dm")
+FIELDS = ("keyword", "line", "steps", "needs", "first", "source", "example", "exampleOf", "status", "dm")
 DM = {"replies": list, "offer": dict, "follow": dict, "send": dict}
 ZIP_TIME = (2026, 1, 1, 0, 0, 0)  # every entry gets the same time, so an unchanged skill zips to the same bytes
+MANYCHAT_ENV = Path("~/Dev/style-lab/.env.local").expanduser()
 
 
 def registry() -> dict:
@@ -148,6 +151,17 @@ def fetch(url: str, failed: list) -> bytes | None:
         return None
 
 
+def manychat(path: str) -> dict:
+    key = next((line.split("=", 1)[1].strip() for line in MANYCHAT_ENV.read_text().splitlines()
+                if line.startswith("MANYCHAT_API_KEY=")), "")
+    if not key:
+        raise SystemExit(f"MANYCHAT_API_KEY is missing from {MANYCHAT_ENV}")
+    req = urllib.request.Request("https://api.manychat.com" + path,
+                                 headers={"Authorization": f"Bearer {key}", "Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(r.read())["data"]
+
+
 def check(keyword: str) -> None:
     reg = registry()
     s = next((s for s in reg["skills"] if s["keyword"] == keyword), None)
@@ -157,8 +171,6 @@ def check(keyword: str) -> None:
     failed = []
     if s["status"] != "live":
         failed.append(f"status is {s['status']}: set it to live once the page is right")
-    if not s["tested"]:
-        failed.append("tested is null: comment the keyword from a second account and record the day its DM came")
     base = f"{reg['site']}/{keyword.lower()}/"
     shown = fetch(base, failed)
     if shown is not None and keyword not in shown.decode():
@@ -169,9 +181,17 @@ def check(keyword: str) -> None:
         for need in (f"{folder.name}/{folder.name}.zip", f"{folder.name}/skills/{folder.name}/SKILL.md"):
             if need not in inside:
                 failed.append(f"the download has no {need}")
+    if keyword not in [f["name"] for f in manychat("/fb/page/getFlows")["flows"]]:
+        failed.append(f"ManyChat has no automation named {keyword}: duplicate BOARD's (HOW-TO-ADD-A-KEYWORD.md)")
+    field = f"{keyword.lower()}_clicked"
+    clicks = next((f["value"] for f in manychat("/fb/page/getBotFields") if f["name"] == field), None)
+    if clicks is None:
+        failed.append(f"ManyChat has no bot field {field} for the link button to count on")
+    elif not clicks:
+        failed.append(f"{field} is 0: set the automation live, comment {keyword} from a second account and tap through")
     if failed:
         raise SystemExit("\n".join(f"FAIL {keyword}: {f}" for f in failed))
-    print(f"OK {keyword}: live, tested {s['tested']}, {base} and its download answer")
+    print(f"OK {keyword}: live, {base} and its download answer, {clicks} link clicks in ManyChat")
 
 
 if __name__ == "__main__":
