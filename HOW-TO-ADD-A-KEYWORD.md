@@ -43,7 +43,12 @@ Instagram's rules (Meta's Private Replies docs, ManyChat's help, Oct 2026):
    6. Point the link button's Set Bot Field action at `<keyword>_clicked`, increasing it by 1.
    7. Reload the editor and open each step to check it stuck.
 6. **Set it live** when the skill video is about to post. While a skill is still in the works, its automation stays a draft (Jimmy, 25 Oct, on BOARD).
-7. **Test it.** From a second Instagram account, comment the keyword on one of his reels where that account hasn't commented it before. The DM should come, and the tap should run the follow check. The link should open the page, and the download should work. Then delete the test comment. Jimmy's second account does it until it's signed into the Browser pane, after which Claude can.
+7. **Test it, from Jimmy's second Instagram account.** It sits under the same login as @jimmy.tensor, so instagram.com in the Browser pane reaches it through the account switcher once Jimmy has signed in there (his one-time step). Act only as the second account, and only for the test.
+   1. Switch to the second account. Comment the keyword on one of his reels where that account hasn't commented it before.
+   2. Check that the public reply appears. Then, in that account's DMs (Requests, if it doesn't follow him), tap the first button.
+   3. If it doesn't follow him, `dm.follow` should come. Follow @jimmy.tensor and tap its button again.
+   4. `dm.send` should come. Its link should open the page, and the download should work.
+   5. Delete the test comment and switch back to @jimmy.tensor.
 8. **Check.** `python3 -I build.py check <KEYWORD>` has to print OK: the page is live, it and the download answer, the automation exists, and `<keyword>_clicked` is at least 1. Until it does, the skill video doesn't post.
 9. **The caption** says "Comment <KEYWORD>", with the keyword in capitals right after "Comment", so the asks log finds the reel.
 
