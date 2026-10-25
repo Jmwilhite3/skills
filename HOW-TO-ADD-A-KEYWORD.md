@@ -43,7 +43,7 @@ Instagram's rules (Meta's Private Replies docs, ManyChat's help, Oct 2026):
    6. Point the link button's Set Bot Field action at `<keyword>_clicked`, increasing it by 1.
    7. Reload the editor and open each step to check it stuck.
 6. **Set it live** when the skill video is about to post. While a skill is still in the works, its automation stays a draft (Jimmy, 25 Oct, on BOARD).
-7. **Test it, from Jimmy's second Instagram account.** It sits under the same login as @jimmy.tensor, so instagram.com in the Browser pane reaches it through the account switcher once Jimmy has signed in there (his one-time step). Act only as the second account, and only for the test.
+7. **Test it, from Jimmy's second Instagram account.** Both accounts are signed in to instagram.com in the Browser pane (25 Oct). Switch from your profile's username at the top. The test account is the one that isn't jimmy.tensor. Act as it only for the test.
    1. Switch to the second account. Comment the keyword on one of his reels where that account hasn't commented it before.
    2. Check that the public reply appears. Then, in that account's DMs (Requests, if it doesn't follow him), tap the first button.
    3. If it doesn't follow him, `dm.follow` should come. Follow @jimmy.tensor and tap its button again.
